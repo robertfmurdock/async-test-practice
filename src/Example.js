@@ -1,17 +1,18 @@
 import React, {useState} from 'react';
 
-export function Example() {
-    const [enabled, setIsEnabled] = useState(false)
+export function Example(props) {
+    const {textService} = props
+    const [textContent, setTextContent] = useState("")
 
     return <div>
-        <button onClick={() => setIsEnabled(true)}>
+        <button
+            onClick={async() => setTextContent(
+                await textService()
+            )}>
             Press me
         </button>
         <div>
-            {enabled ?
-                "Stop poking me"
-                : ""
-            }
+            {textContent}
         </div>
     </div>
 }

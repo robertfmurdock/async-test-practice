@@ -1,13 +1,22 @@
-import {render} from "@testing-library/react";
+import {act, render} from "@testing-library/react";
 import React from "react";
 import {Example} from "./Example";
 import userEvent from "@testing-library/user-event";
+import {waitFor} from "@testing-library/dom";
 
-test('clicking button will show text', () => {
-    const {queryAllByText, getByText, queryByText} = render(<Example/>);
+test('clicking button will show value from async service', async () => {
+    const expectedText = "Stop poking me, please"
+    const textService = async () => expectedText
+
+    const {queryAllByText, getByText, queryByText} = render(<Example textService={textService}/>);
+
     const button = getByText(/Press me/i);
-    expect(queryAllByText(/Stop poking me/i)).toEqual([])
-    expect(button).toBeInTheDocument();
+    expect(queryAllByText(expectedText)).toEqual([])
+
     userEvent.click(button)
-    expect(queryByText(/Stop poking me/i)).toBeInTheDocument()
+
+    await waitFor(() =>
+        expect(queryByText(expectedText)).toBeInTheDocument()
+    )
+
 });
