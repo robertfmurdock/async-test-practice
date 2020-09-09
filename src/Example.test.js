@@ -9,18 +9,19 @@ function sleep(ms) {
 }
 
 test('clicking button will show value from async service', async () => {
-    const expectedText = "Stop poking me, please"
-    const textService = async () => {
-        await sleep(10)
-        return expectedText
-    }
-
-    const {queryAllByText, getByText, queryByText} = render(<Example textService={textService}/>);
-
-    const button = getByText(/Press me/i);
-    expect(queryAllByText(expectedText)).toEqual([])
-
     await act(async () => {
+        const expectedText = "Stop poking me, please"
+        const textService = async () => {
+            await sleep(10)
+            return expectedText
+        }
+
+        const {queryAllByText, getByText, queryByText} = render(<Example textService={textService}/>);
+
+        const button = getByText(/Press me/i);
+        expect(queryAllByText(expectedText)).toEqual([])
+
+
         userEvent.click(button)
 
         await waitFor(() =>
