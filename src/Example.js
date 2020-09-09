@@ -1,18 +1,16 @@
 import React, {useState} from 'react';
 
 export function Example(props) {
-    const {textService} = props
+    const {textService, scope} = props
     const [textContent, setTextContent] = useState("")
-
-    return <div>
-        <button
-            onClick={async() => setTextContent(
-                await textService()
-            )}>
-            Press me
-        </button>
+    return (
         <div>
-            {textContent}
+            <button onClick={scope.on(async () => setTextContent(await textService()))}>
+                Press me
+            </button>
+            <div>
+                {textContent}
+            </div>
         </div>
-    </div>
+    )
 }
