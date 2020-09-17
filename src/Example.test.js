@@ -5,18 +5,19 @@ import userEvent from "@testing-library/user-event";
 import {waitFor} from "@testing-library/dom";
 
 test('clicking button will show value from async service', async () => {
-    const expectedText = "Stop poking me, please"
-    const textService = async () => expectedText
+    await act(async () => {
+        const expectedText = "Stop poking me, please"
+        const textService = async () => expectedText
 
-    const {queryAllByText, getByText, queryByText} = render(<Example textService={textService}/>);
+        const {queryAllByText, getByText, queryByText} = render(<Example textService={textService}/>);
 
-    const button = getByText(/Press me/i);
-    expect(queryAllByText(expectedText)).toEqual([])
+        const button = getByText(/Press me/i);
+        expect(queryAllByText(expectedText)).toEqual([])
 
-    userEvent.click(button)
+        userEvent.click(button)
 
-    await waitFor(() =>
-        expect(queryByText(expectedText)).toBeInTheDocument()
-    )
-
+        await waitFor(() =>
+            expect(queryByText(expectedText)).toBeInTheDocument()
+        )
+    });
 });
