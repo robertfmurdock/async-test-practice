@@ -5,9 +5,10 @@ import userEvent from "@testing-library/user-event";
 
 test('clicking button will show text', () => {
     const {queryAllByText, getByText, queryByText} = render(<Example/>);
-    const button = getByText(/Press me/i);
     expect(queryAllByText(/Stop poking me/i)).toEqual([])
-    expect(button).toBeInTheDocument();
+    const button = getByText(/Press me/i);
+    
     userEvent.click(button)
+
     expect(queryByText(/Stop poking me/i)).toBeInTheDocument()
 });
