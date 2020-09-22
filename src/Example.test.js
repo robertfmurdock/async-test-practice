@@ -2,7 +2,7 @@ import {act, render} from "@testing-library/react";
 import React from "react";
 import {Example} from "./Example";
 import userEvent from "@testing-library/user-event";
-import {waitFor} from "@testing-library/dom";
+import {waitFor} from "@testing-library/dom/dist";
 
 test('clicking button will show value from async service', async () => {
     await act(async () => {
