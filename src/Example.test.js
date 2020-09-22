@@ -14,16 +14,13 @@ test('clicking button will show value from async service', async () => {
             await sleep(10)
             return expectedText
         }
-
         const exerciseScope = scope()
 
-        const wrapper = render(<Example textService={textService} scope={exerciseScope}/>);
-
-        const {queryAllByText, getByText, queryByText} = wrapper;
-
-        const button = getByText(/Press me/i);
+        const {queryAllByText, getByText, queryByText} = render(
+            <Example textService={textService} scope={exerciseScope}/>
+        );
         expect(queryAllByText(expectedText)).toEqual([])
-
+        const button = getByText(/Press me/i);
         userEvent.click(button)
 
         await exerciseScope.all()
